@@ -1,0 +1,22 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        ruby: [3.1.2]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Run tests
+      run: ruby fetcher_test.rb

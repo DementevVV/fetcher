@@ -5,8 +5,8 @@ require 'net/http'
 require 'optparse'
 require 'time'
 
-# Module Fetch - for fetching web pages and recording metadata
-module Fetch
+# Module Fetcher - for fetching web pages and recording metadata
+module Fetcher
   def self.run(args)
     options = parse_options(args)
 
@@ -63,9 +63,14 @@ module Fetch
 
   def self.fetch_web_page(url, options)
     uri = URI.parse(url)
-    uri = URI.parse("https://#{url}") if uri.scheme.nil?
+    uri = URI.parse("http://#{url}") if uri.scheme.nil?
 
-    response = Net::HTTP.get_response(uri)
+    begin
+      response = Net::HTTP.get_response(uri)
+    rescue StandardError => e
+      puts "Error: Could not fetch website: #{url}: #{e.message}"
+      exit
+    end
 
     if options[:metadata]
       save_metadata(uri)
@@ -120,4 +125,4 @@ module Fetch
   end
 end
 
-Fetch.run(ARGV)
+Fetcher.run(ARGV)
