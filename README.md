@@ -1,3 +1,5 @@
+[![Run Tests](https://github.com/DementevVV/fetcher/actions/workflows/test.yml/badge.svg)](https://github.com/DementevVV/fetcher/actions/workflows/test.yml)
+
 # Fetcher
 
 Fetcher is a command line program that allows you to fetch web pages and save them to disk for later retrieval and browsing.
