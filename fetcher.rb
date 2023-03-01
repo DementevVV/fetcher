@@ -84,9 +84,9 @@ module Fetcher
 
   # Save metadata of fetched website
   def self.save_metadata(uri)
-    last_fetched_time = File.exist?("#{uri.host}.html") ? File.stat("#{uri.host}.html").mtime : Time.now
+    last_fetched_time = File.exist?("output/#{uri.host}.html") ? File.stat("output/#{uri.host}.html").mtime : Time.now
 
-    metadata_file = File.open("#{uri.host}.metadata", 'w')
+    metadata_file = File.open("output/#{uri.host}.metadata", 'w')
     metadata_file.write("Website: #{uri.host}\n")
     metadata_file.write("Last fetch: #{last_fetched_time}\n")
 
@@ -109,17 +109,17 @@ module Fetcher
 
   # Print the contents of the metadata file
   def self.print_metadata(uri)
-    puts File.read("#{uri.host}.metadata")
+    puts File.read("output/#{uri.host}.metadata")
     puts "\n"
   end
 
   # Delete the metadata file if it exists and if it should be deleted
   def self.delete_metadata(uri)
-    File.delete("#{uri.host}.metadata") if File.exist?("#{uri.host}.metadata")
+    File.delete("output/#{uri.host}.metadata") if File.exist?("output/#{uri.host}.metadata")
   end
 
   def self.write_response_to_file(uri, response)
-    File.open("#{uri.host}.html", 'w') do |file|
+    File.open("output/#{uri.host}.html", 'w') do |file|
       file.write(response.body)
     end
   end
